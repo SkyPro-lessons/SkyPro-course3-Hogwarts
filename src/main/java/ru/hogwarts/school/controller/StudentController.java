@@ -27,14 +27,12 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getAllStudents() {
-        return ResponseEntity.ok(studentService.getAllStudents());
-    }
-
-    @GetMapping("age/{age}")
-    public ResponseEntity<Collection<Student>> getStudentsByAge(@PathVariable Integer age) {
+    public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam(required = false, defaultValue = "-1") Integer age) {
+        if (age == -1) {
+            return ResponseEntity.ok(studentService.getAllStudents());
+        }
         Collection<Student> foundStudents = studentService.getStudentsByAge(age);
-        if (foundStudents.isEmpty()) {
+        if (foundStudents.isEmpty() || age < 0 || age > 120) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(foundStudents);

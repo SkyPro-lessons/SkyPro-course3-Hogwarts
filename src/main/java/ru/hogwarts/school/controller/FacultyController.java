@@ -27,12 +27,12 @@ public class FacultyController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> getAllFaculties() {
-        return ResponseEntity.ok(facultyService.getAllFaculties());
-    }
+    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@RequestParam(required = false, defaultValue = "-1") String color) {
 
-    @GetMapping("color/{color}")
-    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@PathVariable String color) {
+        if (color.equals("-1")) {
+            return ResponseEntity.ok(facultyService.getAllFaculties());
+        }
+
         Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
         if (faculties.isEmpty()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
