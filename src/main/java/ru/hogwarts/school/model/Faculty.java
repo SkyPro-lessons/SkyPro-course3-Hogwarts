@@ -1,17 +1,20 @@
 package ru.hogwarts.school.model;
 
+import javax.persistence.*;
 import java.util.Locale;
+import java.util.Objects;
 
+@Entity
 public class Faculty {
-    private long id;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String name;
     private String color;
 
-    public Faculty(long id, String name, String color) {
-        this.id = id;
-        this.name = name;
-        this.color = color.toLowerCase(Locale.ROOT);
-    }
+    public Faculty() {}
 
     @Override
     public boolean equals(Object o) {
@@ -20,9 +23,9 @@ public class Faculty {
 
         Faculty faculty = (Faculty) o;
 
-        if (id != faculty.id) return false;
-        if (name != null ? !name.equals(faculty.name) : faculty.name != null) return false;
-        return color != null ? color.equals(faculty.color) : faculty.color == null;
+        if (!Objects.equals(id, faculty.id)) return false;
+        if (!Objects.equals(name, faculty.name)) return false;
+        return Objects.equals(color, faculty.color);
     }
 
     @Override

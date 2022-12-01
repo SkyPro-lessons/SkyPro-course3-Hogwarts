@@ -1,15 +1,19 @@
 package ru.hogwarts.school.model;
 
+import javax.persistence.*;
+import java.util.Objects;
+
+@Entity
 public class Student {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
     private String name;
     private int age;
 
-    public Student(long id, String name, int age) {
-        this.id = id;
-        this.name = name;
-        this.age = age;
-    }
+    public Student() {}
 
     public long getId() {
         return id;
@@ -44,7 +48,7 @@ public class Student {
 
         if (id != student.id) return false;
         if (age != student.age) return false;
-        return name != null ? name.equals(student.name) : student.name == null;
+        return Objects.equals(name, student.name);
     }
 
     @Override
