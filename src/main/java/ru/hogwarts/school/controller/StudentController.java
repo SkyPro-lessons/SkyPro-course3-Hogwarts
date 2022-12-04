@@ -27,16 +27,28 @@ public class StudentController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam(required = false, defaultValue = "-1") Integer age) {
+    public ResponseEntity<Collection<Student>> getStudentsByAge(
+            @RequestParam(required = false, defaultValue = "-1") Integer age,
+            @RequestParam(required = false) Integer min,
+            @RequestParam(required = false) Integer max
+            ) {
+
+        if (max != null || min != null) {
+            return ResponseEntity.ok(studentService.getStudentByAgeBeetween(min, max));
+        }
+
         if (age == -1) {
             return ResponseEntity.ok(studentService.getAllStudents());
         }
+
         Collection<Student> foundStudents = studentService.getStudentsByAge(age);
         if (foundStudents.isEmpty() || age < 0 || age > 120) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
         return ResponseEntity.ok(foundStudents);
     }
+
+
 
 
     @PostMapping

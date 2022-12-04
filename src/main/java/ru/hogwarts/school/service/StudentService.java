@@ -22,6 +22,15 @@ public class StudentService {
         return studentRepository.findById(id).orElse(null);
     }
 
+    public Collection<Student> getStudentByAgeBeetween(Integer min, Integer max) {
+        if (min == null) {
+            min = 0;
+        } else if (max == null) {
+            max = 120;
+        }
+        return studentRepository.findStudentByAgeBetween(min, max);
+    }
+
     public Student editStudent(Student student) {
         if (findStudent(student.getId()) != null) {
             return studentRepository.save(student);

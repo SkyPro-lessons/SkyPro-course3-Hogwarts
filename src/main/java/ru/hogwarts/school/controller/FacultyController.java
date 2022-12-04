@@ -27,7 +27,10 @@ public class FacultyController {
     }
 
     @GetMapping
-    public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@RequestParam(required = false, defaultValue = "-1") String color) {
+    public ResponseEntity<Collection<Faculty>> getFacultiesByColorOrName(
+            @RequestParam(required = false, defaultValue = "-1") String color,
+            @RequestParam(required = false) String name
+    ) {
 
         if (color.equals("-1")) {
             return ResponseEntity.ok(facultyService.getAllFaculties());
