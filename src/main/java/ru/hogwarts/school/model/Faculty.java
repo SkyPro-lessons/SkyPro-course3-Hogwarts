@@ -16,6 +16,11 @@ public class Faculty {
 
     public Faculty() {}
 
+    public Faculty(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

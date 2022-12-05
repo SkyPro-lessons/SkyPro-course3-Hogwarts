@@ -28,19 +28,22 @@ public class FacultyController {
 
     @GetMapping
     public ResponseEntity<Collection<Faculty>> getFacultiesByColorOrName(
-            @RequestParam(required = false, defaultValue = "-1") String color,
+            @RequestParam(required = false) String color,
             @RequestParam(required = false) String name
     ) {
+        Collection<Faculty> faculties = null;
 
-        if (color.equals("-1")) {
+        if (name != null) {
+            faculties = facultyService.getFacultyByName(name);
+        } else if (color != null) {
+            faculties = facultyService.getFacultyByColor(color);
+        }
+
+        if (faculties == null) {
             return ResponseEntity.ok(facultyService.getAllFaculties());
         }
 
-        Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
-        if (faculties.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-        return ResponseEntity.ok(faculties);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PostMapping
