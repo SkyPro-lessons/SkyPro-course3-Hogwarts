@@ -48,7 +48,14 @@ public class StudentController {
         return ResponseEntity.ok(foundStudents);
     }
 
-
+    @GetMapping("faculty")
+    public ResponseEntity<Collection<Student>> getStudentsByFaculty(@RequestParam String facultyName) {
+        Collection<Student> foundStudents = studentService.getStudentsByFaculty(facultyName);
+        if (foundStudents.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(foundStudents);
+    }
 
 
     @PostMapping
