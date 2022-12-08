@@ -1,6 +1,7 @@
 package ru.hogwarts.school.model;
 
 import javax.persistence.*;
+import java.util.Collection;
 import java.util.Locale;
 import java.util.Objects;
 
@@ -14,7 +15,15 @@ public class Faculty {
     private String name;
     private String color;
 
+    @OneToMany(mappedBy = "faculty")
+    private Collection<Student> students;
+
     public Faculty() {}
+
+    public Faculty(String name, String color) {
+        this.name = name;
+        this.color = color;
+    }
 
     @Override
     public boolean equals(Object o) {
