@@ -1,5 +1,7 @@
 package ru.hogwarts.school.model;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Arrays;
 import java.util.Objects;
@@ -7,7 +9,7 @@ import java.util.Objects;
 @Entity
 public class Avatar {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue
     private Long id;
 
     private String filePath;
@@ -15,6 +17,7 @@ public class Avatar {
     private String mediaType;
 
     @Lob
+    @Type(type="org.hibernate.type.BinaryType")
     private byte[] data;
 
     @OneToOne

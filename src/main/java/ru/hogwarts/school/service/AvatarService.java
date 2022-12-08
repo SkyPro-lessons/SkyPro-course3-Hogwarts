@@ -49,12 +49,13 @@ public class AvatarService {
         }
 
         Avatar avatar = findAvatar(studentId);
+        System.out.println("avatar = " + avatar);
         avatar.setStudent(student);
         avatar.setFilePath(filePath.toString());
         avatar.setFileSize(file.getSize());
         avatar.setMediaType(file.getContentType());
         avatar.setData(generateImagePreview(filePath));
-
+        System.out.println("avatar = " + avatar);
         avatarRepository.save(avatar);
     }
 
@@ -76,7 +77,7 @@ public class AvatarService {
     }
 
     public Avatar findAvatar(Long studentId) {
-        return avatarRepository.findByStudentId(studentId).orElse(new Avatar());
+        return avatarRepository.findAvatarByStudentId(studentId).orElse(new Avatar());
     }
 
     public String getExtension(String fileName) {
