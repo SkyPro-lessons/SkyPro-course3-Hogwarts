@@ -21,50 +21,30 @@ public class FacultyController {
     @GetMapping("{id}")
     public ResponseEntity<Faculty> getFacultyInfo(@PathVariable Long id) {
         Faculty faculty = facultyService.findFaculty(id);
-
-        if (null == faculty) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(faculty);
     }
 
     @GetMapping("color")
     public ResponseEntity<Collection<Faculty>> getFacultiesByColor(@RequestParam String color) {
         Collection<Faculty> faculties = facultyService.getFacultiesByColor(color);
-
-        if (faculties.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-
         return ResponseEntity.ok(faculties);
     }
 
     @GetMapping
     public ResponseEntity<Collection<Faculty>> getAllFaculties() {
         Collection<Faculty> faculties = facultyService.getAllFaculties();
-        return (faculties == null) ? ResponseEntity.notFound().build() : ResponseEntity.ok(faculties);
+        return ResponseEntity.ok(faculties);
     }
 
     @GetMapping("name-or-color")
-    public ResponseEntity<Faculty> getFacultiesByNameOrColor(@RequestParam String nameOrColor) {
-        Faculty faculty = facultyService.getFacultyByNameOrColor(nameOrColor);
-
-        if (faculty == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        return ResponseEntity.ok(faculty);
+    public ResponseEntity<Collection<Faculty>> getFacultiesByNameOrColor(@RequestParam String nameOrColor) {
+        Collection<Faculty> faculties = facultyService.getFacultiesByNameOrColor(nameOrColor);
+        return ResponseEntity.ok(faculties);
     }
 
     @GetMapping("{id}/students")
     public ResponseEntity<Collection<Student>> getStudentsByFacultyId(@PathVariable Long id) {
         Collection<Student> foundStudents = facultyService.getStudentsByFaculty(id);
-
-        if (foundStudents.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(foundStudents);
     }
 
@@ -76,11 +56,6 @@ public class FacultyController {
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
         Faculty foundFaculty = facultyService.editFaculty(faculty);
-
-        if (null == foundFaculty) {
-            return ResponseEntity.notFound().build();
-        }
-
         return ResponseEntity.ok(foundFaculty);
     }
 
