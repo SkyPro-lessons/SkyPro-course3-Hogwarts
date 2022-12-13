@@ -55,17 +55,21 @@ class FacultyControllerTest {
 
     @Test
     public void saveFacultyTest() throws Exception {
+        final Long id = 1L;
+        final String name = "Slizzerin";
+        final String color = "violet";
+
         JSONObject facultyObject = new JSONObject();
-        facultyObject.put("name", "SLIZZERIN");
-        facultyObject.put("color", "violet");
+        facultyObject.put("name", name);
+        facultyObject.put("color", color);
 
         Faculty faculty = new Faculty();
-        faculty.setId(1);
-        faculty.setName("SLIZZERIN");
-        faculty.setColor("violet");
+        faculty.setId(id);
+        faculty.setName(name);
+        faculty.setColor(color);
 
         when(facultyRepository.save(ArgumentMatchers.any(Faculty.class))).thenReturn(faculty);
-        when(facultyRepository.findById(1L)).thenReturn(Optional.of(faculty));
+        when(facultyRepository.findById(ArgumentMatchers.any(Long.class))).thenReturn(Optional.of(faculty));
 
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/faculty")
@@ -73,17 +77,17 @@ class FacultyControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("SLIZZERIN"))
-                .andExpect(jsonPath("$.color").value("violet"));
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/faculty/1")
+                        .get("/faculty/" + id)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1))
-                .andExpect(jsonPath("$.name").value("SLIZZERIN"))
-                .andExpect(jsonPath("$.color").value("violet"));
+                .andExpect(jsonPath("$.id").value(id))
+                .andExpect(jsonPath("$.name").value(name))
+                .andExpect(jsonPath("$.color").value(color));
 
     }
 
