@@ -19,6 +19,11 @@ public class Student {
 
     public Student() {}
 
+    public Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
     public long getId() {
         return id;
     }
@@ -31,7 +36,7 @@ public class Student {
         return age;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -71,4 +76,6 @@ public class Student {
                 ", age=" + age +
                 '}';
     }
+
+
 }
