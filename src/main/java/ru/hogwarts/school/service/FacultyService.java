@@ -22,7 +22,7 @@ public class FacultyService {
         return facultyRepository.save(faculty);
     }
 
-    public Faculty findFaculty(long id) {
+    public Faculty findFaculty(Long id) {
         return facultyRepository.findById(id).orElse(null);
     }
 
@@ -49,7 +49,7 @@ public class FacultyService {
         return facultyRepository.findFacultiesByNameIgnoreCaseOrColorIgnoreCase(nameOrColor, nameOrColor);
     }
 
-    public Collection<Student> getStudentsByFaculty(long id) {
+    public Collection<Student> getStudentsByFaculty(Long id) {
         return studentRepository.findStudentByFacultyId(id);
     }
 }

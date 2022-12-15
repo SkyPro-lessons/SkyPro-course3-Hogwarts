@@ -149,4 +149,39 @@ class SchoolAppWithMockTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(List.of(faculty1, faculty2))));
     }
 
+    @Test
+    public void testFindFacultiesByColorOrNameIgnoreCase() throws Exception {
+        Long id1 = 1L;
+        String name1 = "Hufflepuf";
+
+        Long id2 = 2L;
+        String name2 = "Griffindor";
+
+        String color = "Yellow";
+
+        Faculty faculty1 = new Faculty();
+        faculty1.setId(id1);
+        faculty1.setName(name1);
+        faculty1.setColor(color);
+
+        Faculty faculty2 = new Faculty();
+        faculty2.setId(id2);
+        faculty2.setName(name2);
+        faculty2.setColor(color);
+
+        when(facultyRepository.findByColor(color)).thenReturn(Set.of(faculty1, faculty2));
+
+        mockMvc.perform(MockMvcRequestBuilders
+                        .get("/faculty")
+                        .queryParam("color", color)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().json(objectMapper.writeValueAsString(List.of(faculty1, faculty2))));
+    }
+
+
+
+
+
 }

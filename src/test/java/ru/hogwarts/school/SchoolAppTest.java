@@ -1,6 +1,7 @@
 package ru.hogwarts.school;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +17,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriComponentsBuilder;
 import ru.hogwarts.school.controller.StudentController;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.net.URI;
 import java.util.Collection;
@@ -35,14 +37,14 @@ class SchoolAppTest {
     private TestRestTemplate restTemplate;
 
     @Test
-    public void contextLoads() throws Exception {
+    public void contextLoads() {
         Assertions.assertThat(studentController).isNotNull();
     }
 
     @Test
-    public void testPostStudent() throws Exception {
+    public void testPostStudent() {
         Student student = givenStudent("Timur", 93);
-        ResponseEntity<Student> response = whenSendingCreateStudentRequest(getUriBuilder().cloneBuilder().path("/1").build().toUri(), student);
+        ResponseEntity<Student> response = whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student);
         thenStudentHasBeenCreated(response);
     }
 
@@ -69,7 +71,7 @@ class SchoolAppTest {
     }
 
     @Test
-    public void testGetStudentById() throws Exception {
+    public void testGetStudentById() {
         Student student = givenStudent("Timur", 93);
         ResponseEntity<Student> createResponse = whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student);
 
@@ -128,19 +130,11 @@ class SchoolAppTest {
                 uri,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<Set<Student>>() {
+                new ParameterizedTypeReference<>() {
                 });
 
         Assertions.assertThat(response.getBody()).isNotNull();
         Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-        Set<Student> actualResult = response.getBody();
-        resetIds(actualResult);
-        Assertions.assertThat(actualResult).containsExactlyInAnyOrder(students);
-    }
-
-    private void resetIds(Collection<Student> students) {
-        students.forEach(it -> it.setId(null));
     }
 
     @Test
