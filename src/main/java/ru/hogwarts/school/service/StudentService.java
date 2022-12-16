@@ -56,4 +56,8 @@ public class StudentService {
         Student student = studentRepository.findStudentById(studentId);
         return facultyRepository.findFacultyByStudents(student);
     }
+
+    public int getStudentsCount() {
+        return studentRepository.getAllStudentsCount();
+    }
 }

@@ -117,4 +117,8 @@ public class StudentController {
         }
     }
 
+    @GetMapping(value = "/count")
+    public int getStudentsCount() {
+        return studentService.getStudentsCount();
+    }
 }
