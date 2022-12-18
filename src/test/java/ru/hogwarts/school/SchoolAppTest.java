@@ -189,32 +189,32 @@ class SchoolAppTest {
         Assertions.assertThat(emptyRs.getStatusCode()).isEqualTo(HttpStatus.NOT_FOUND);
     }
 
-    @Test
-    public void testGetStudentsCount() {
-        Student student_18 = givenStudent("student1", 18);
-        Student student_28 = givenStudent("student2", 28);
-        Student student_38 = givenStudent("student3", 38);
-        Student student_47 = givenStudent("student4", 47);
-        Student student_57 = givenStudent("student5", 57);
-        Student student_67 = givenStudent("student6", 67);
-
-        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_18);
-        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_28);
-        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_38);
-        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_47);
-        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_57);
-        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_67);
-
-        URI uri = getUriBuilder().path("/count").build().toUri();
-
-        ResponseEntity<Integer> response = restTemplate.getForEntity(uri, Integer.class);
-        System.out.println("response = " + response);
-
-        Assertions.assertThat(response.getBody()).isNotNull();
-        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
-
-
-    }
+//    @Test
+//    public void testGetStudentsCount() {
+//        Student student_18 = givenStudent("student1", 18);
+//        Student student_28 = givenStudent("student2", 28);
+//        Student student_38 = givenStudent("student3", 38);
+//        Student student_47 = givenStudent("student4", 47);
+//        Student student_57 = givenStudent("student5", 57);
+//        Student student_67 = givenStudent("student6", 67);
+//
+//        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_18);
+//        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_28);
+//        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_38);
+//        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_47);
+//        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_57);
+//        whenSendingCreateStudentRequest(getUriBuilder().build().toUri(), student_67);
+//
+//        URI uri = getUriBuilder().path("/count").build().toUri();
+//
+//        ResponseEntity<Integer> response = restTemplate.getForEntity(uri, Integer.class);
+//        System.out.println("response = " + response);
+//
+//        Assertions.assertThat(response.getBody()).isNotNull();
+//        Assertions.assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
+//
+//
+//    }
 
 
 
