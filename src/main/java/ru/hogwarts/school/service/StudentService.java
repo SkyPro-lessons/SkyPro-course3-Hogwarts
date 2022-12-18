@@ -56,4 +56,16 @@ public class StudentService {
         Student student = studentRepository.findStudentById(studentId);
         return facultyRepository.findFacultyByStudents(student);
     }
+
+    public int getCountAllStudents() {
+        return studentRepository.getCountAllStudents();
+    }
+
+    public double getAverageAgeAllStudents() {
+        return studentRepository.getAverageAgeAllStudents();
+    }
+
+    public Collection<Student> getFiveLastStudents() {
+        return studentRepository.getFiveLastStudents();
+    }
 }
