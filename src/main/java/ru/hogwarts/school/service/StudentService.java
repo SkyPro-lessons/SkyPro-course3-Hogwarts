@@ -15,7 +15,7 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
 
-    Logger logger = LoggerFactory.getLogger(StudentService.class);
+    private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
         this.studentRepository = studentRepository;
