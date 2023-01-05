@@ -93,17 +93,16 @@ public class StudentService {
         logger.info("Was invoked method for get all student names, starting letter A");
         Collection<Student> students = this.getAllStudents();
         return students.stream()
-                .parallel()
                 .map(e -> e.getName().toUpperCase(Locale.ROOT))
                 .filter(e -> e.startsWith("A"))
-                .sorted().toList();
+                .sorted()
+                .toList();
     }
 
     public Double getAverageAge() {
         logger.info("Was invoked method for get average age for all students");
         Collection<Student> students = this.getAllStudents();
         return students.stream()
-                .parallel()
                 .mapToInt(e -> e.getAge())
                 .average()
                 .orElse(0);

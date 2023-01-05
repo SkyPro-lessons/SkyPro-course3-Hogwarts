@@ -8,6 +8,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("faculty")
@@ -48,6 +49,12 @@ public class FacultyController {
         return ResponseEntity.ok(foundStudents);
     }
 
+    @GetMapping("longest-name")
+    public ResponseEntity<String> getFacultyNameWithLongestName() {
+        String facultyName = facultyService.getFacultyNameWithLongestName();
+        return ResponseEntity.ok(facultyName);
+    }
+
     @PostMapping
     public Faculty createFaculty(@RequestBody Faculty faculty) {
         return facultyService.createFaclulty(faculty);
@@ -62,6 +69,11 @@ public class FacultyController {
     @DeleteMapping("{id}")
     public void deleteFaculty(@PathVariable Long id) {
         facultyService.deleteFaculty(id);
+    }
+
+    @GetMapping("step-4")
+    public ResponseEntity<Integer> calculateFormula() {
+        return facultyService.calculateFormula();
     }
 }
 
