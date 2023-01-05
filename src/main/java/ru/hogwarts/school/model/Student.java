@@ -1,6 +1,7 @@
 package ru.hogwarts.school.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -17,6 +18,9 @@ public class Student {
 
     @ManyToOne
     private Faculty faculty;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    private Avatar avatar;
 
     public Student() {}
 
