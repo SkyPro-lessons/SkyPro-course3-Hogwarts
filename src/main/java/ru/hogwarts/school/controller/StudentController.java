@@ -55,9 +55,12 @@ public class StudentController {
         return ResponseEntity.ok(averageAge);
     }
 
+    @GetMapping("print-students-thread")
+    public void printFewStudentsInThreads() {
+        studentService.printFewStudentsThreads();
+    }
 
     @GetMapping("age")
-
     public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam Integer age) {
         Collection<Student> foundStudents = studentService.getStudentsByAge(age);
         return ResponseEntity.ok(foundStudents);

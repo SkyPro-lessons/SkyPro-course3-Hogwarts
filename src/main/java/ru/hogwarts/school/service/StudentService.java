@@ -8,7 +8,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -106,5 +108,32 @@ public class StudentService {
                 .mapToInt(e -> e.getAge())
                 .average()
                 .orElse(0);
+    }
+
+    public void printFewStudentsThreads() {
+        logger.info("Was invoked method for print few students in different threads");
+        List<Student> students = new ArrayList<>(this.getAllStudents());
+
+        new Thread(() -> {
+            printStudent(students, "Поток 1", 2);
+            printStudent(students, "Поток 1", 3);
+        }).start();
+
+        new Thread(() -> {
+            printStudent(students, "Поток 2", 4);
+            printStudent(students, "Поток 2", 5);
+        }).start();
+
+        printStudent(students, "Основной поток", 0);
+        printStudent(students, "Основной поток", 1);
+    }
+
+    private void printStudent(List<Student> students, String message, int number) {
+        System.out.println(message + ": #" + number + ": " + students.get(number).getName());
+
+        String s = "";
+        for (int i = 0; i < 1000; i++) {
+            s += i;
+        }
     }
 }
