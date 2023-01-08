@@ -60,6 +60,11 @@ public class StudentController {
         studentService.printFewStudentsThreads();
     }
 
+    @GetMapping("print-students-thread-sync")
+    public void printFewStudentsInThreadsSync() {
+        studentService.printFewStudentsThreadsSync();
+    }
+
     @GetMapping("age")
     public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam Integer age) {
         Collection<Student> foundStudents = studentService.getStudentsByAge(age);

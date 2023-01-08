@@ -19,6 +19,8 @@ public class StudentService {
     private final StudentRepository studentRepository;
     private final FacultyRepository facultyRepository;
 
+    private Integer currentStudent = 0;
+
     private final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     public StudentService(StudentRepository studentRepository, FacultyRepository facultyRepository) {
@@ -124,16 +126,51 @@ public class StudentService {
             printStudent(students, "Поток 2", 5);
         }).start();
 
-        printStudent(students, "Основной поток", 0);
-        printStudent(students, "Основной поток", 1);
+        printStudent(students, "Поток 0", 0);
+        printStudent(students, "Поток 0", 1);
     }
 
     private void printStudent(List<Student> students, String message, int number) {
         System.out.println(message + ": #" + number + ": " + students.get(number).getName());
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
-        String s = "";
-        for (int i = 0; i < 1000; i++) {
-            s += i;
+    public void printFewStudentsThreadsSync() {
+        logger.info("Was invoked method for print few students in different synchronized threads");
+        List<Student> students = new ArrayList<>(this.getAllStudents());
+
+        Thread thread1 = new Thread(() -> {
+            printStudentSync(students, "Поток 1", 2);
+            printStudentSync(students, "Поток 1", 3);
+        });
+        thread1.start();
+
+        Thread thread2 = new Thread(() -> {
+            printStudentSync(students, "Поток 2", 4);
+            printStudentSync(students, "Поток 2", 5);
+        });
+        thread2.start();
+
+        printStudentSync(students, "Поток 0", 0);
+        printStudentSync(students, "Поток 0", 1);
+    }
+
+    private void printStudentSync(List<Student> students, String message, int number) {
+        while (currentStudent != number) {
+            try {
+                Thread.sleep(100);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        synchronized (currentStudent) {
+            System.out.println(message + ": #" + number + ": " + students.get(number).getName());
+            currentStudent++;
         }
     }
 }
