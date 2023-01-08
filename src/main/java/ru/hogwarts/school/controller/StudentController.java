@@ -43,8 +43,21 @@ public class StudentController {
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping("all-starting-A")
+    public ResponseEntity<Collection<String>> getAllStudentsStartingLetterA() {
+        Collection<String> studentNames = studentService.getAllStudentsStartingLetterA();
+        return ResponseEntity.ok(studentNames);
+    }
+
+    @GetMapping("average-age-stream")
+    public ResponseEntity<Double> getAverageAge() {
+        Double averageAge = studentService.getAverageAge();
+        return ResponseEntity.ok(averageAge);
+    }
+
 
     @GetMapping("age")
+
     public ResponseEntity<Collection<Student>> getStudentsByAge(@RequestParam Integer age) {
         Collection<Student> foundStudents = studentService.getStudentsByAge(age);
         return ResponseEntity.ok(foundStudents);

@@ -2,6 +2,7 @@ package ru.hogwarts.school;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentMatchers;
 import org.mockito.InjectMocks;
@@ -14,16 +15,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import ru.hogwarts.school.controller.FacultyController;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.AvatarRepository;
 import ru.hogwarts.school.repository.FacultyRepository;
 import ru.hogwarts.school.repository.StudentRepository;
 import ru.hogwarts.school.service.AvatarService;
 import ru.hogwarts.school.service.FacultyService;
+import ru.hogwarts.school.service.InfoService;
 import ru.hogwarts.school.service.StudentService;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -51,6 +52,9 @@ class SchoolAppWithMockTest {
 
     @SpyBean
     private AvatarService avatarService;
+
+    @SpyBean
+    private InfoService infoService;
 
     @InjectMocks
     private FacultyController facultyController;
@@ -178,6 +182,22 @@ class SchoolAppWithMockTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().json(objectMapper.writeValueAsString(List.of(faculty1, faculty2))));
+    }
+
+    @Test
+    @Disabled
+    public void testFindAllStudentsStartingLetterA() throws Exception {
+        Student student1 = new Student("Anton", 22);
+        Student student2 = new Student("Robert", 42);
+        Student student3 = new Student("slex", 32);
+
+        List<Student> students = new ArrayList<>();
+        students.add(student1);
+        students.add(student2);
+        students.add(student3);
+        System.out.println("studentService.getAllStudentsStartingLetterA() = " + studentService.getAllStudentsStartingLetterA());
+
+        when(studentService.getAllStudentsStartingLetterA()).thenReturn(List.of(student3.getName().toUpperCase(Locale.ROOT), student1.getName().toUpperCase(Locale.ROOT)));
     }
 
 
